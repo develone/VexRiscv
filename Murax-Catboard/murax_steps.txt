@@ -1,0 +1,155 @@
+First update VexRiscv to latest. 
+
+cd VexRiscv
+
+git remote add upstream  https://github.com/SpinalHDL/VexRiscv.git
+
+This should be added to ,git/conf
+
+[remote "upstream"]
+	url = https://github.com/SpinalHDL/VexRiscv.git
+	fetch = +refs/heads/*:refs/remotes/upstream/*
+	
+git fetch upstream
+
+git merge upstream/master
+
+git push origin master
+
+commit 75bbb28ef62636dd0d4d3741c6e559a911fc85af (HEAD -> master, upstream/master, origin/master, origin/HEAD)
+Author: Dolu1990 <charles.papon.90@gmail.com>
+Date:   Sat Mar 6 19:49:23 2021 +0100
+
+    readme update verlator version
+	 
+	 git clone git@github.com:develone/VexRiscv.git
+
+mkdir Murax-Catboard
+
+cd Murax-Catboard
+
+cp ../scripts/Murax/iCE40HX8K-EVB/toplevel*.* .
+
+cp toplevel.pcf toplevel.pcf.EVB
+
+cd ../; sbt "runMain vexriscv.demo.MuraxWithRamInit"
+
+cp Murax.v Murax-Catboard/
+
+cp Murax.v_toplevel_system_ram_ram_symbol*.bin Murax-Catboard/
+
+cd Murax-Catboard
+
+:~/VexRiscv/Murax-Catboard $ ls
+Murax.v                                      simple.log
+Murax.v_toplevel_system_ram_ram_symbol0.bin  toplevel.pcf
+Murax.v_toplevel_system_ram_ram_symbol1.bin  toplevel.pcf.EVB
+Murax.v_toplevel_system_ram_ram_symbol2.bin  toplevel_pll.v
+Murax.v_toplevel_system_ram_ram_symbol3.bin  toplevel.v
+
+yosys -l simple.log -v3 -p "synth_ice40 -top toplevel -blif toplevel.blif -json toplevel.json" Murax.v toplevel.v toplevel_pll.v
+
+nextpnr-ice40 --hx8k --pcf toplevel.pcf --json toplevel.json --asc toplevel.asc
+
+    -t
+        print a timing report (based on topological timing
+        analysis)
+
+   -m
+        enable max_span_hack for conservative timing estimates
+        
+   -d lp384|lp1k|hx1k|lp4k|hx4k|lp8k|hx8k|up3k|up5k|u1k|u2k|u4k
+        select the device type (default = lp variant)
+
+icetime -tmd hx8k toplevel.asc
+// Reading input .asc file..
+// Reading 8k chipdb file..
+// Creating timing netlist..
+
+icetime topological timing analysis report
+==========================================
+
+Info: max_span_hack is enabled: estimate is conservative.
+
+Report for critical path:
+-------------------------
+
+        lc40_17_26_3 (LogicCell40) [clk] -> lcout: 0.640 ns
+     0.640 ns net_67744 (murax.system_cpu.execute_arbitration_isValid)
+        odrv_17_26_67744_67879 (Odrv4) I -> O: 0.372 ns
+        t6879 (Span4Mux_v4) I -> O: 0.372 ns
+        t6878 (Span4Mux_v4) I -> O: 0.372 ns
+        t6877 (LocalMux) I -> O: 0.330 ns
+        inmux_15_20_62975_63026 (InMux) I -> O: 0.260 ns
+        lc40_15_20_4 (LogicCell40) in1 -> lcout: 0.400 ns
+     2.744 ns net_58854 (murax.system_cpu.decode_to_execute_SHIFT_CTRL_SB_LUT4_I1_O)
+        t5545 (LocalMux) I -> O: 0.330 ns
+        inmux_15_19_62849_62899 (InMux) I -> O: 0.260 ns
+        lc40_15_19_3 (LogicCell40) in3 -> lcout: 0.316 ns
+     3.649 ns net_58730 (murax.system_cpu.decode_to_execute_SHIFT_CTRL_SB_LUT4_I1_O_SB_LUT4_I3_O)
+        odrv_15_19_58730_62947 (Odrv4) I -> O: 0.372 ns
+        t5490 (Span4Mux_v4) I -> O: 0.372 ns
+        t5489 (Span4Mux_v4) I -> O: 0.372 ns
+        t5488 (LocalMux) I -> O: 0.330 ns
+        inmux_18_26_75958_75988 (InMux) I -> O: 0.260 ns
+        t1065 (CascadeMux) I -> O: 0.000 ns
+        lc40_18_26_3 (LogicCell40) in2 -> lcout: 0.379 ns
+     5.732 ns net_71821 (murax.system_cpu_dBus_cmd_halfPipe_regs_ready_SB_LUT4_I0_O_SB_LUT4_I2_O)
+        t7476 (LocalMux) I -> O: 0.330 ns
+        inmux_18_27_76069_76129 (InMux) I -> O: 0.260 ns
+        t1073 (CascadeMux) I -> O: 0.000 ns
+        lc40_18_27_6 (LogicCell40) in2 -> lcout: 0.379 ns
+     6.700 ns net_71947 (murax.system_cpu.decode_to_execute_ENV_CTRL_SB_LUT4_I0_O)
+        t7544 (LocalMux) I -> O: 0.330 ns
+        inmux_17_26_71881_71894 (InMux) I -> O: 0.260 ns
+        t990 (CascadeMux) I -> O: 0.000 ns
+        lc40_17_26_0 (LogicCell40) in2 -> lcout: 0.379 ns
+     7.668 ns net_67741 (murax.system_cpu.decode_to_execute_ENV_CTRL_SB_LUT4_I0_O_SB_LUT4_I3_O)
+        t6859 (LocalMux) I -> O: 0.330 ns
+        inmux_18_27_76074_76110 (InMux) I -> O: 0.260 ns
+        lc40_18_27_3 (LogicCell40) in1 -> lcout: 0.400 ns
+     8.656 ns net_71944 (murax.system_cpu.IBusSimplePlugin_iBusRsp_stages_1_output_ready)
+        t7540 (LocalMux) I -> O: 0.330 ns
+        inmux_19_28_80285_80322 (InMux) I -> O: 0.260 ns
+        lc40_19_28_5 (LogicCell40) in1 -> lcout: 0.400 ns
+     9.645 ns net_76145 (murax.system_cpu._zz_51_SB_LUT4_I2_O)
+        odrv_19_28_76145_80005 (Odrv4) I -> O: 0.372 ns
+        t8177 (Span4Mux_h4) I -> O: 0.316 ns
+        t8176 (Span4Mux_v4) I -> O: 0.372 ns
+        t8175 (Span4Mux_h4) I -> O: 0.316 ns
+        t8174 (LocalMux) I -> O: 0.330 ns
+        inmux_24_20_99664_99698 (InMux) I -> O: 0.260 ns
+        lc40_24_20_1 (LogicCell40) in0 -> lcout: 0.449 ns
+    12.058 ns net_95542 (murax._zz_7)
+        odrv_24_20_95542_95448 (Odrv4) I -> O: 0.372 ns
+        t9489 (Span4Mux_h4) I -> O: 0.316 ns
+        t9488 (Span4Mux_h4) I -> O: 0.316 ns
+        t9487 (Span4Mux_h4) I -> O: 0.316 ns
+        t9486 (Span4Mux_h4) I -> O: 0.316 ns
+        t9485 (Span4Mux_v4) I -> O: 0.372 ns
+        t9484 (LocalMux) I -> O: 0.330 ns
+        inmux_8_15_34218_34251 (CEMux) I -> O: 0.603 ns
+    14.997 ns net_34251 (murax._zz_7)
+        ram_8_15 (SB_RAM40_4K) RCLKE [setup]: 0.267 ns
+    15.263 ns net_30375 (murax.system_ram_io_bus_rsp_payload_data[14])
+
+Resolvable net names on path:
+     0.640 ns ..  2.344 ns murax.system_cpu.execute_arbitration_isValid
+     2.744 ns ..  3.333 ns murax.system_cpu.decode_to_execute_SHIFT_CTRL_SB_LUT4_I1_O
+     3.649 ns ..  5.353 ns murax.system_cpu.decode_to_execute_SHIFT_CTRL_SB_LUT4_I1_O_SB_LUT4_I3_O
+     5.732 ns ..  6.321 ns murax.system_cpu_dBus_cmd_halfPipe_regs_ready_SB_LUT4_I0_O_SB_LUT4_I2_O
+     6.700 ns ..  7.289 ns murax.system_cpu.decode_to_execute_ENV_CTRL_SB_LUT4_I0_O
+     7.668 ns ..  8.257 ns murax.system_cpu.decode_to_execute_ENV_CTRL_SB_LUT4_I0_O_SB_LUT4_I3_O
+     8.656 ns ..  9.246 ns murax.system_cpu.IBusSimplePlugin_iBusRsp_stages_1_output_ready
+     9.645 ns .. 11.609 ns murax.system_cpu._zz_51_SB_LUT4_I2_O
+    12.058 ns .. 14.997 ns murax._zz_7
+              RDATA[13] -> murax.system_ram_io_bus_rsp_payload_data[15]
+               RDATA[1] -> murax.system_ram_io_bus_rsp_payload_data[12]
+               RDATA[5] -> murax.system_ram_io_bus_rsp_payload_data[13]
+               RDATA[9] -> murax.system_ram_io_bus_rsp_payload_data[14]
+
+Total number of logic levels: 9
+Total path delay: 15.26 ns (65.52 MHz)
+
+icepack toplevel.asc toplevel.bin
+-rw-r--r--   1 devel devel  135100 Mar 18 10:30 toplevel.bin
