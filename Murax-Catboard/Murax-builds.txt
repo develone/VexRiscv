@@ -51,6 +51,27 @@ set_io io_spis R12
 
 
 build 3 iCE40HX8K-EVB
+
+file:///tmp/mozilla_devel0/iCE40sysCLOCKPLLDesignandUsageGuide.pdf
+
+PLLOUT Frequency for FEEDBACK_PATH = SIMPLEIn the SIMPLE feedback mode, 
+the PLL feedback signal taps directly from the output of the VCO, 
+before the final divider stage. Consequently, the PLL output frequency 
+has an additional divider step, DIVQ, contributed by the final divider 
+step as shown in equation below. (DIVF, DIVQ and DIVR are binary).
+
+
+
+defparam toplevel_pll_inst.DIVR = 4'b0010;	
+defparam toplevel_pll_inst.DIVF = 7'b0010110;	
+defparam toplevel_pll_inst.DIVQ = 3'b110;		
+DIVR	2		(DIVR+1)=3
+DIVF	22	(DIVF+1)=23
+DIVQ	6
+PLLout = REFERENCECLK*(23)/2^^(6)*(3)
+PLLout = REFERENCECLK*(DIVF+1)/2^^(DIVQ)*(DIVR+1)
+
+
 https://www.olimex.com/Products/FPGA/iCE40/iCE40HX8K-EVB/open-source-hardware
 sbt "runMain vexriscv.demo.MuraxWithRamInit"
 VERILOG = ../../../Murax.v toplevel.v toplevel_pll.v
