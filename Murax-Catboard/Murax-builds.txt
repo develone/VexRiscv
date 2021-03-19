@@ -1,0 +1,81 @@
+build 1 iCE40-hx8k_breakout_board
+VERILOG = ../../../Murax.v toplevel.v
+sbt "runMain vexriscv.demo.MuraxWithRamInit"
+## iCE40-hx8k breakout board
+
+set_io io_J3  J3
+set_io io_H16 H16
+set_io io_G15 G15
+set_io io_G16 G16
+set_io io_F15 F15
+set_io io_B12 B12
+set_io io_B10 B10
+set_io io_led[0] B5
+set_io io_led[1] B4
+set_io io_led[2] A2
+set_io io_led[3] A1
+set_io io_led[4] C5
+set_io io_led[5] C4
+set_io io_led[6] B3
+set_io io_led[7] C3
+
+build 2 iCE40-hx8k_breakout_board_xip
+VBASE = ../../..
+VNAME = Murax_iCE40_hx8k_breakout_board_xip
+VERILOG = ${VBASE}/${VNAME}.v
+sbt "runMain vexriscv.demo.Murax_iCE40_hx8k_breakout_board_xip
+## iCE40-hx8k breakout board
+
+set_io io_mainClk  J3
+set_io io_jtag_tck H16
+set_io io_jtag_tdi G15
+set_io io_jtag_tdo G16
+set_io io_jtag_tms F15
+set_io io_uart_txd B12
+set_io io_uart_rxd B10
+set_io io_led[0] B5
+set_io io_led[1] B4
+set_io io_led[2] A2
+set_io io_led[3] A1
+set_io io_led[4] C5
+set_io io_led[5] C4
+set_io io_led[6] B3
+set_io io_led[7] C3
+
+#XIP
+set_io io_miso P12
+set_io io_mosi P11
+set_io io_sclk R11
+set_io io_spis R12
+
+
+
+build 3 iCE40HX8K-EVB
+https://www.olimex.com/Products/FPGA/iCE40/iCE40HX8K-EVB/open-source-hardware
+sbt "runMain vexriscv.demo.MuraxWithRamInit"
+VERILOG = ../../../Murax.v toplevel.v toplevel_pll.v
+set_io CLK J3
+set_io BUT1 K11
+set_io BUT2 P13
+set_io LED1 M12
+set_io LED2 R16
+
+
+FEATURES
+
+    iCE40HX8K-CT256 FPGA 7680 Logic cells, 960 LABs, 128 K embedded RAM bits
+    512KB SRAM organized as 256Kx16bit 10ns
+    2MB Serial Flash
+    2 user status LEDs
+    Programming successful status LED
+    2 user buttons
+    Reset button
+    Power jack for 5V DC external power supply
+    PGM connector (all signals at PGM1 @ 3.3V DC)
+    34 pin connector bus
+    4 x 40 pin connectors for GPIOs
+    100 Mhz oscillator
+    Power supply DCDC regulators
+    Power supply status LED
+    Dimentions: 65x67mm ~ (2.56x2.64)"
+
