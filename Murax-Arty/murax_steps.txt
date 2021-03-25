@@ -41,3 +41,53 @@ On ws009 Ubuntu X86_64
 
 git clone https://github.com/SpinalHDL/VexRiscv.git
 git clone git@github.com:develone/VexRiscvSocSoftware.git
+
+
+@JordiVM Mar 02 09:37
+https://github.com/SpinalHDL/VexRiscv#build-the-risc-v-gcc
+
+wkg/
+
+version=riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14
+This line has an error with the riscv
+wget -O riscv64-unknown-elf-gcc.tar.gz riscv https://static.dev.sifive.com/dev-tools/$version.tar.gz
+ 
+tar -xzvf riscv64-unknown-elf-gcc.tar.gz
+sudo mv $version /opt/riscv
+**********************************************On Ubuntu X86_64 I created the build folder.
+not done echo 'export PATH=/opt/riscv/bin:$PATH' >> ~/.bashrc
+export PATH=/opt/riscv/bin/:$PATH
+cd VexRiscv/scripts/Murax/arty_a7/
+make
+vidal@ws009:~/wkg/VexRiscv/src/main/c/murax/hello_world$ ls build/
+hello_world.asm  hello_world.hex  hello_world.v
+hello_world.elf  hello_world.map  src
+
+devel@mypi3-20:~/VexRiscv/src/main/c/murax/hello_world/build $ cp ../../../../../../Murax-Arty/build/hello_world.* .
+devel@mypi3-20:~/VexRiscv/src/main/c/murax/hello_world/build $ cd ~/VexRiscv
+
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        new file:   Murax-Arty/build/hello_world.asm
+        new file:   Murax-Arty/build/hello_world.elf
+        new file:   Murax-Arty/build/hello_world.hex
+        new file:   Murax-Arty/build/hello_world.map
+        new file:   Murax-Arty/build/hello_world.v
+        new file:   Murax-Arty/build/src/crt.d
+        new file:   Murax-Arty/build/src/main.d
+        new file:   Murax-Arty/build/src/main.o.d
+        new file:   Murax-Arty/build/src/main.o.disasm
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   Murax-Arty/murax_steps.txt
+
+**********************************************On Ubuntu X86_64 I created the build folder.  This is because I do not have the Risc-V tools on RPi4.
+
+vidal@ws009:~/wkg/VexRiscv/src/main/c/murax/hello_world$ scp -r build/ devel@mypi3-20:~/VexRiscv/Murax-Arty/
