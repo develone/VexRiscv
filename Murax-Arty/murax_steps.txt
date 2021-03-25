@@ -1,0 +1,38 @@
+03/24/21
+Testing Arty
+In one shell
+sudo /home/vidal/wkg/ARTY_GITHUB/openarty/sw/host/netuart /dev/ttyUSB1
+
+In 2nd shell
+/home/vidal/wkg/ARTY_GITHUB/openarty/sw/host/
+./wbregs version
+00000100 ( VERSION) : [....] 20170903
+
+sbt run
+[36] vexriscv.demo.Murax_arty
+git diff 
+diff --git a/src/main/scala/vexriscv/demo/Murax.scala b/src/main/scala/vexriscv/demo/Murax.scala
+index a0590ad..49e2c16 100644
+--- a/src/main/scala/vexriscv/demo/Murax.scala
++++ b/src/main/scala/vexriscv/demo/Murax.scala
+@@ -479,7 +479,8 @@ object MuraxWithRamInit{
+ 
+ object Murax_arty{
+   def main(args: Array[String]) {
+-    val hex = "src/main/c/murax/hello_world/build/hello_world.hex"
++    val hex = "src/main/ressource/hex/muraxDemo.hex"
++    //val hex = "src/main/c/murax/hello_world/build/hello_world.hex"
+     SpinalVerilog(Murax(MuraxConfig.default(false).copy(coreFrequency = 100 MHz,onChipRamSize = 32 kB, onChipRamHexFile = hex)))
+   }
+ }
+mkdir Murax-Arty
+
+cp src/main/scala/vexriscv/demo/Murax.scala Murax-Arty
+sbt "runMain vexriscv.demo.Murax_arty" or sbt run
+[36] vexriscv.demo.Murax_arty
+ls -la Murax.v*
+-rw-r--r-- 1 devel devel 270423 Mar 25 06:59 Murax.v
+-rw-r--r-- 1 devel devel  73728 Mar 25 06:59 Murax.v_toplevel_system_ram_ram_symbol0.bin
+-rw-r--r-- 1 devel devel  73728 Mar 25 06:59 Murax.v_toplevel_system_ram_ram_symbol1.bin
+-rw-r--r-- 1 devel devel  73728 Mar 25 06:59 Murax.v_toplevel_system_ram_ram_symbol2.bin
+-rw-r--r-- 1 devel devel  73728 Mar 25 06:59 Murax.v_toplevel_system_ram_ram_symbol3.bin
