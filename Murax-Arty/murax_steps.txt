@@ -36,3 +36,8 @@ ls -la Murax.v*
 -rw-r--r-- 1 devel devel  73728 Mar 25 06:59 Murax.v_toplevel_system_ram_ram_symbol1.bin
 -rw-r--r-- 1 devel devel  73728 Mar 25 06:59 Murax.v_toplevel_system_ram_ram_symbol2.bin
 -rw-r--r-- 1 devel devel  73728 Mar 25 06:59 Murax.v_toplevel_system_ram_ram_symbol3.bin
+
+On ws009 Ubuntu X86_64
+
+git clone https://github.com/SpinalHDL/VexRiscv.git
+git clone git@github.com:develone/VexRiscvSocSoftware.git
