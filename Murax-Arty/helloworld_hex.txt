@@ -1,0 +1,79 @@
+VexRiscv
+commit 4db6f3f6778642d8c08012521a81e68a003f3b7d (HEAD -> master, origin/master, origin/HEAD)
+Author: Edward Vidal Jr <develone@sbcglobal.net>
+Date:   Thu Mar 25 15:07:33 2021 -0600
+
+The file src/main/c/murax/hello_world/build/hello_world.hex was created on Ubuntu x86_64
+riscv64-unknown-elf-gcc.tar.gz
+ 
+object Murax_arty{
+  def main(args: Array[String]) {
+    //val hex = "src/main/ressource/hex/muraxDemo.hex"
+    val hex = "src/main/c/murax/hello_world/build/hello_world.hex"
+    SpinalVerilog(Murax(MuraxConfig.default(false).copy(coreFrequency = 100 MHz,onChipRamSize = 32 kB, onChipRamHexFile = hex)))
+  }
+}
+
+devel@mypi3-20:~/VexRiscv $ ls -la Murax.v*
+-rw-r--r-- 1 devel devel 270423 Mar 26 04:08 Murax.v
+-rw-r--r-- 1 devel devel  73728 Mar 26 04:08 Murax.v_toplevel_system_ram_ram_symbol0.bin
+-rw-r--r-- 1 devel devel  73728 Mar 26 04:08 Murax.v_toplevel_system_ram_ram_symbol1.bin
+-rw-r--r-- 1 devel devel  73728 Mar 26 04:08 Murax.v_toplevel_system_ram_ram_symbol2.bin
+-rw-r--r-- 1 devel devel  73728 Mar 26 04:08 Murax.v_toplevel_system_ram_ram_symbol3.bin
+devel@mypi3-20:~/VexRiscv $ md5sum Murax.v*
+35c82baf80a176286241c63eae79ca57  Murax.v
+c731aad4c95c2cc84e97eb9858bab3b0  Murax.v_toplevel_system_ram_ram_symbol0.bin
+243e6e108237bd79c27b2c475eca4aef  Murax.v_toplevel_system_ram_ram_symbol1.bin
+eed983cecf2b9873ad32afc3672a4bb9  Murax.v_toplevel_system_ram_ram_symbol2.bin
+970cab1958ad7febfc2bc541e2481d73  Murax.v_toplevel_system_ram_ram_symbol3.bin
+
+module Murax (
+endmodule
+module Apb3Router (
+endmodule
+module Apb3Decoder (
+endmodule
+module MuraxApb3Timer (
+endmodule
+module Apb3UartCtrl (
+endmodule
+module Apb3Gpio (
+endmodule
+module PipelinedMemoryBusToApbBridge (
+endmodule
+module MuraxPipelinedMemoryBusRam (
+endmodule
+module SystemDebugger (
+endmodule
+module JtagBridge (
+endmodule
+module VexRiscv (
+endmodule
+module MuraxMasterArbiter (
+endmodule
+module BufferCC_3 (
+endmodule
+module InterruptCtrl (
+endmodule
+module Timer (
+endmodule
+module Prescaler (
+endmodule
+module StreamFifo (
+endmodule
+module UartCtrl (
+endmodule
+module BufferCC_2 (
+endmodule
+module FlowCCByToggle (
+endmodule
+module StreamFifoLowLatency (
+endmodule
+module UartCtrlRx (
+endmodule
+module UartCtrlTx (
+endmodule
+module BufferCC_1 (
+endmodule
+module BufferCC (
+endmodule
